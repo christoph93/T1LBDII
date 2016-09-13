@@ -30,7 +30,7 @@ CREATE TABLE personagem
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
-  CONSTRAINT check_raca CHECK (raca in ('HUMANO','ORC','ELFO','DRAGONIANOS', 'GOBLIN'))
+  CONSTRAINT check_raca CHECK (raca in ('HUMANO','ORC','ELFO','DRAGONIANO', 'GOBLIN'))
 
 );
 
