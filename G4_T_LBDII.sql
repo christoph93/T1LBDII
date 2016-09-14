@@ -257,3 +257,32 @@ BEGIN
 END;
 
 /
+
+CREATE OR REPLACE TRIGGER verifica_qtd_item
+before INSERT OR UPDATE
+   ON personagem_item
+   FOR EACH ROW
+
+BEGIN
+
+  item_id number(10) NOT NULL,
+  personagem_id number(10) NOT NULL,
+  quantidade int NOT NULL
+
+   if INSERTING THEN
+    if :new.quantidade <= 0 then
+    
+      Raise_Application_Error (-20343, 'Personagem não pode ter quantidade 0 de um item.');
+    
+    end if;
+   end if;
+   
+   if UPDATING then
+    if :new.quantidade <= 0 then
+    
+    end if;
+   end if;
+   
+END;
+
+/
