@@ -1,0 +1,43 @@
+Descrição do problema
+
+O problema consiste em modelar um sistema simples para ser usado em um jogo de RPG online.
+
+Conceitos básicos
+
+-Usuário: representa a pessoa que se cadastrou no jogo e contém os dados de identificação do usuário.
+-Personagem: é a representação do usuário no jogo. Sua raça e classe são definidas no momento da criação do personagem. Os pontos de vida (hp) e pontos de magia (sp) são calculados com base na classe, raça e nível.
+-Arma: somente uma arma pode ser equipada por personagem em um determinado momento.
+-Mapa: é o local onde o personagem e os outros elementos do jogo estão localizados. O tipo do mapa determina os tipos de eventos que podem ocorrer.
+-Habilidade: são comuns à raças ou classes. Podem ser de diversas propriedades, podendo infligir dano ou modificar status de personagens.
+-Item: Encontrados durante o jogo. Alguns podem ser consumidos pelo personagem e outros podem ser equipamentos. 
+-NPC: non-player character, qualquer elemento que não seja o jogador. Podem ser personagens aliados, inimigos, monstros, etc.
+
+
+Regras de negócio
+
+-Usuário:
+	O username deve ser único
+	A idade do jogador deve ser maior que 16 anos. Este atributo é calculado de acordo com a data de nascimento so usuário.
+	O e-mail deve ser validado, contendo ‘@’
+-Personagem:
+	A classe deve ser uma das seguintes: arqueiro, feiticeiro, templário, trapaceiro
+	A raça deve ser umas das seguintes: humano, orc, elfo, dragoniano, goblin
+	Pontos de vida e de magia: são calculados de acordo com a raça, classe e nível do personagem
+			hp = hp + ((HPbase * 0.10) * nivel)
+			sp = sp + ((SPbase * 0.10) * nivel)
+		Cada classe e raça possui modificadores para seu HPbase e SPbase, o que influencia seu ganho de hp e sp a medida que ganha níveis.
+-Arma:
+	O tipo da arma deve ser um dos seguintes: cajado, espada, maça, adaga, arco
+-Habilidade:
+	Deve ser de uma das seguintes propriedades: fogo, gelo, neutro, vento, terra, status, cura
+-Item:
+-Npc:
+	Deve ser de um dos seguintes tipos: inimigo, aliado, neutro
+-Mapa:
+	Deve ser de uma das categorias: cidade, campo, calabouço
+	
+	
+
+
+
+
