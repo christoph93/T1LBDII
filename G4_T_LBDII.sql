@@ -8,7 +8,7 @@ CREATE TABLE usuario
   nome varchar2(50) NOT NULL,
   sobrenome varchar2(50) NOT NULL,
   email varchar2(50) NOT NULL,
-  idade int,
+  idade number(10),
   data_nasc date not null,
 
   CONSTRAINT usuario_PK PRIMARY KEY (user_id),
@@ -23,12 +23,12 @@ CREATE TABLE personagem
   personagem_id number(10) NOT NULL,
   classe varchar2(50) NOT NULL,
   raca varchar2(50) NOT NULL,
-  hp int NOT NULL,
-  sp int NOT NULL,
-  user_id int,
-  mapa_id int,
-  arma_id int,
-  nivel int NOT NULL,
+  hp number(10) NOT NULL,
+  sp number(10) NOT NULL,
+  user_id number(10),
+  mapa_id number(10),
+  arma_id number(10),
+  nivel number(10) NOT NULL,
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
@@ -41,7 +41,7 @@ CREATE TABLE arma
   arma_id number(10) NOT NULL,
   nome varchar2(50) NOT NULL,
   tipo varchar2(50) NOT NULL,
-  dano_base int NOT NULL,
+  dano_base number(10) NOT NULL,
 
   CONSTRAINT armas_PK PRIMARY KEY (arma_id),
   CONSTRAINT nome_unique UNIQUE (nome),
@@ -55,9 +55,9 @@ CREATE TABLE habilidade
   habilidade_id number(10) NOT NULL,
   nome varchar2(40) NOT NULL,
   propriedade varchar2(20) NOT NULL,
-  valor_base int,
+  valor_base number(10),
   descricao varchar2(100) NOT NULL,
-  custo int NOT NULL,
+  custo number(10) NOT NULL,
 
   CONSTRAINT habilidade_PK PRIMARY KEY (habilidade_id),
   CONSTRAINT nome_unique_hab UNIQUE (nome),
@@ -70,10 +70,10 @@ CREATE TABLE item
 (
   item_id number(10) NOT NULL,
   tipo varchar2(20) NOT NULL,
-  valor_base int NOT NULL,
+  valor_base number(10) NOT NULL,
   nome varchar2(50) NOT NULL,
-  ataque int,
-  defesa int,
+  ataque number(10),
+  defesa number(10),
   equipa_em varchar2(20),
   
   
@@ -87,9 +87,9 @@ CREATE TABLE npc
   npc_id number(10) NOT NULL,
   tipo varchar2(50) NOT NULL,
   nome varchar2(50) NOT NULL,
-  hp int,
-  sp int,
-  nivel int not null,
+  hp number(10),
+  sp number(10),
+  nivel number(10) not null,
   
   CONSTRAINT npc_pk PRIMARY KEY (npc_id),
   CONSTRAINT check_tipo_npc CHECK (tipo in ('INIMIGO','ALIADO', 'NEUTRO'))
@@ -122,7 +122,7 @@ CREATE TABLE personagem_item
 (
   item_id number(10) NOT NULL,
   personagem_id number(10) NOT NULL,
-  quantidade int NOT NULL
+  quantidade number(10) NOT NULL
 
 );
 
