@@ -4,10 +4,10 @@
 CREATE TABLE usuario
 (
   user_id number(10) NOT NULL,
-  user_name varchar2(50) NOT NULL,
+  user_name varchar2(40) NOT NULL,
   nome varchar2(50) NOT NULL,
   sobrenome varchar2(50) NOT NULL,
-  email varchar2(50) NOT NULL,
+  email varchar2(80) NOT NULL,
   idade number(10),
   data_nasc date not null,
 
@@ -21,8 +21,8 @@ CREATE TABLE usuario
 CREATE TABLE personagem
 (
   personagem_id number(10) NOT NULL,
-  classe varchar2(50) NOT NULL,
-  raca varchar2(50) NOT NULL,
+  classe varchar2(20) NOT NULL,
+  raca varchar2(20) NOT NULL,
   hp number(10) NOT NULL,
   sp number(10) NOT NULL,
   user_id number(10),
@@ -40,7 +40,7 @@ CREATE TABLE arma
 (
   arma_id number(10) NOT NULL,
   nome varchar2(50) NOT NULL,
-  tipo varchar2(50) NOT NULL,
+  tipo varchar2(20) NOT NULL,
   dano_base number(10) NOT NULL,
 
   CONSTRAINT armas_PK PRIMARY KEY (arma_id),
@@ -56,7 +56,7 @@ CREATE TABLE habilidade
   nome varchar2(40) NOT NULL,
   propriedade varchar2(20) NOT NULL,
   valor_base number(10),
-  descricao varchar2(100) NOT NULL,
+  descricao varchar2(200) NOT NULL,
   custo number(10) NOT NULL,
 
   CONSTRAINT habilidade_PK PRIMARY KEY (habilidade_id),
@@ -85,7 +85,7 @@ CREATE TABLE item
 CREATE TABLE npc
 (
   npc_id number(10) NOT NULL,
-  tipo varchar2(50) NOT NULL,
+  tipo varchar2(20) NOT NULL,
   nome varchar2(50) NOT NULL,
   hp number(10),
   sp number(10),
@@ -102,10 +102,10 @@ CREATE TABLE mapa
   mapa_id number(10) NOT NULL,
   nome varchar2(50) NOT NULL,
   tamanho varchar2(30) NOT NULL,
-  tipo varchar2(30) NOT NULL,
+  tipo varchar2(20) NOT NULL,
   
   CONSTRAINT mapa_id PRIMARY KEY (mapa_id),
-  CONSTRAINT check_tipo_mapa CHECK (tipo in ('CIDADE','CAMPO', 'CALABOUÇO'))
+  CONSTRAINT check_tipo_mapa CHECK (tipo in ('CIDADE','CAMPO', 'CALABOUCO'))
   
 );
 
