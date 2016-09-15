@@ -28,6 +28,7 @@ CREATE TABLE personagem
   user_id int,
   mapa_id int,
   arma_id int,
+  nivel int NOT NULL,
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
@@ -148,7 +149,7 @@ ALTER TABLE npc_mapa ADD CONSTRAINT mapa_fk FOREIGN KEY (mapa_id) REFERENCES map
 --1 trigger tipo after - calcula hp/sp
 
 CREATE OR REPLACE TRIGGER update_hp_sp
-AFTER INSERT OR UPDATE
+BEFORE INSERT OR UPDATE
    ON personagem
    FOR EACH ROW
 
@@ -208,38 +209,39 @@ BEGIN
   END IF;
 
 END;
-
 /
 
 --3 trigger tipo before e for each row
 
-CREATE OR REPLACE TRIGGER calcula_idade
+create or replace TRIGGER calcula_idade
 before INSERT OR UPDATE
    ON usuario
    FOR EACH ROW
-
+declare
+  vIdade number;
 BEGIN
-
-  :new.idade := trunc((months_between(sysdate, :new.idade))/12);
+  select to_number(trunc((months_between(sysdate, :new.data_nasc))/12))
+    into vIdade
+    from dual;
+  :new.idade := vIdade;
 
 END;
-
 /
 
-CREATE OR REPLACE TRIGGER verifica_custo
+create or replace TRIGGER verifica_custo
 before INSERT OR UPDATE
    ON personagem_habilidade
    FOR EACH ROW
 
 DECLARE
   
-  vCusto int;
-  vSP int;
+  vCusto number;
+  vSP number;
 
 BEGIN
 
   select h.custo
-    into vCustom
+    into vCusto
     from habilidade h
    where h.habilidade_id = :new.habilidade_id;
 
@@ -255,34 +257,23 @@ BEGIN
    end if;
    
 END;
-
 /
 
-CREATE OR REPLACE TRIGGER verifica_qtd_item
-before INSERT OR UPDATE
+create or replace TRIGGER verifica_qtd_item
+AFTER INSERT OR UPDATE
    ON personagem_item
    FOR EACH ROW
-
+   
 BEGIN
 
-  item_id number(10) NOT NULL,
-  personagem_id number(10) NOT NULL,
-  quantidade int NOT NULL
+	if :new.quantidade <= 0 then
 
-   if INSERTING THEN
-    if :new.quantidade <= 0 then
-    
-      Raise_Application_Error (-20343, 'Personagem não pode ter quantidade 0 de um item.');
-    
-    end if;
-   end if;
-   
-   if UPDATING then
-    if :new.quantidade <= 0 then
-    
-    end if;
-   end if;
+	  delete 
+		from personagem_item
+	   where ITEM_ID = :new.item_id 
+		 and PERSONAGEM_ID = :new.personagem_id;
+
+	end if;
    
 END;
-
 /
