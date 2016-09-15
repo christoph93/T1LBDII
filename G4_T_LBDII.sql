@@ -31,7 +31,7 @@ CREATE TABLE personagem
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
-  CONSTRAINT check_raca CHECK (raca in ('Humano','Orc','Elfo','Dragonianos', 'Goblin'))
+  CONSTRAINT check_raca CHECK (raca in ('HUMANO','ORC','ELFO','DRAGONIANO', 'GOBLIN'))
 
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE habilidade
   CONSTRAINT habilidade_PK PRIMARY KEY (habilidade_id),
   CONSTRAINT nome_unique_hab UNIQUE (nome),
   CONSTRAINT check_propriedade_hab CHECK (propriedade in ('FOGO','GELO','NEUTRO','VENTO', 'TERRA', 'STATUS', 'CURA')),
-  CONSTRAINT check_valor_hab CHECK (valor_base > 0)
+  CONSTRAINT check_valor_hab CHECK (valor_base >= 0)
 
 );
 
@@ -77,8 +77,8 @@ CREATE TABLE item
   
   
   CONSTRAINT item_PK PRIMARY KEY (item_id),
-  CONSTRAINT check_tipo_item CHECK (tipo in ('CONSUMIVEL','OUTROS','ESCUDO','VESTIMENTA','CALÇADOS','CAPACETE', 'CAPA')),
-  CONSTRAINT check_equipa_em CHECK (equipa_em in ('MÃO','CABEÇA','PÉS','CORPO','PERNA','ACESSORIO'))
+  CONSTRAINT check_tipo_item CHECK (tipo in ('CONSUMIVEL','OUTROS','ESCUDO','VESTIMENTA','CALÇADOS','CAPACETE', 'CAPA', 'ARMADURA', 'CHAPEU')),
+  CONSTRAINT check_equipa_em CHECK (equipa_em in ('MAO','CABECA','PES','CORPO','PERNA','ACESSORIO'))
 );
 
 CREATE TABLE npc
