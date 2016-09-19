@@ -29,6 +29,7 @@ CREATE TABLE personagem
   mapa_id number(10),
   arma_id number(10),
   nivel number(10) NOT NULL,
+  defesa number(10) generated always as ( nivel * 0.3 ) virtual,
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
@@ -142,11 +143,12 @@ ALTER TABLE personagem_habilidade ADD CONSTRAINT habilidade_fk FOREIGN KEY (habi
 
 ALTER TABLE personagem_item ADD CONSTRAINT personagem_item_fk FOREIGN KEY (personagem_id) REFERENCES personagem(personagem_id);
 ALTER TABLE personagem_item ADD CONSTRAINT item_fk FOREIGN KEY (item_id) REFERENCES item(item_id);
+ALTER TABLE personagem_item ADD CONSTRAINT personagem_item_unique UNIQUE (personagem_id, item_id);
 
 ALTER TABLE npc_mapa ADD CONSTRAINT npc_fk FOREIGN KEY (npc_id) REFERENCES npc(npc_id);
 ALTER TABLE npc_mapa ADD CONSTRAINT mapa_fk FOREIGN KEY (mapa_id) REFERENCES mapa(mapa_id);
 
---1 trigger tipo after - calcula hp/sp
+--3 trigger tipo before e for each row
 
 CREATE OR REPLACE TRIGGER update_hp_sp
 BEFORE INSERT OR UPDATE
@@ -211,8 +213,6 @@ BEGIN
 END;
 /
 
---3 trigger tipo before e for each row
-
 create or replace TRIGGER calcula_idade
 before INSERT OR UPDATE
    ON usuario
@@ -259,6 +259,8 @@ BEGIN
 END;
 /
 
+--1 trigger tipo after - calcula hp/sp
+
 create or replace TRIGGER verifica_qtd_item
 AFTER INSERT OR UPDATE
    ON personagem_item
@@ -274,6 +276,40 @@ BEGIN
 		 and PERSONAGEM_ID = :new.personagem_id;
 
 	end if;
+   
+END;
+/
+
+create or replace TRIGGER calcula_defesa
+AFTER INSERT OR UPDATE OR DELETE
+   ON personagem_item
+   FOR EACH ROW
+   
+BEGIN
+
+  if DELETING then
+
+    update personagem p
+       set p.defesa = (select sum(i.defesa) 
+                         from item i 
+                  inner join personagem_item p on i.item_id = p.item_id
+                       where p.personagem_id = :old.personagem_id
+                         and i.defesa is not null) + (p.nivel * 0.3)
+     where p.personagem_id = :old.personagem_id;    
+
+  end if;
+
+  if INSERTING OR UPDATING then
+
+    update personagem p
+       set p.defesa = (select sum(i.defesa) 
+                         from item i 
+                  inner join personagem_item p on i.item_id = p.item_id
+                       where p.personagem_id = :new.personagem_id
+                         and i.defesa is not null) + (p.nivel * 0.3)
+     where p.personagem_id = :new.personagem_id;    
+
+  end if;
    
 END;
 /
