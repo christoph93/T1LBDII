@@ -140,6 +140,7 @@ ALTER TABLE personagem ADD CONSTRAINT personagem_arma_fk FOREIGN KEY (arma_id) R
 
 ALTER TABLE personagem_habilidade ADD CONSTRAINT personagem_hab_fk FOREIGN KEY (personagem_id) REFERENCES personagem(personagem_id);
 ALTER TABLE personagem_habilidade ADD CONSTRAINT habilidade_fk FOREIGN KEY (habilidade_id) REFERENCES habilidade(habilidade_id);
+ALTER TABLE personagem_habilidade ADD CONSTRAINT personagem_habilidade_unique UNIQUE (personagem_id,habilidade_id);
 
 ALTER TABLE personagem_item ADD CONSTRAINT personagem_item_fk FOREIGN KEY (personagem_id) REFERENCES personagem(personagem_id);
 ALTER TABLE personagem_item ADD CONSTRAINT item_fk FOREIGN KEY (item_id) REFERENCES item(item_id);
