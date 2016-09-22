@@ -29,7 +29,7 @@ CREATE TABLE personagem
   mapa_id number(10),
   arma_id number(10),
   nivel number(10) NOT NULL,
-  defesa number(10) default 1,
+  defesa number(10) default 1 not null,
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
@@ -290,15 +290,16 @@ BEGIN
   if INSERTING OR UPDATING THEN
 
     update personagem p
-       set p.defesa = (select i.defesa from item i where i.item_id = :new.item_id) + p.defesa;
+       set p.defesa = (select i.defesa from item i where i.item_id = :new.item_id) + p.defesa
+       where p.personagem_id = :new.personagem_id;
 
   END IF; 
 
   if DELETING THEN
 
     update personagem p
-       set p.defesa = p.defesa - (select i.defesa from item i where i.item_id = :old.item_id) ;
-
+       set p.defesa = p.defesa - (select i.defesa from item i where i.item_id = :old.item_id)
+       where p.personagem_id = :old.personagem_id;
   end if;            
 
 END;
