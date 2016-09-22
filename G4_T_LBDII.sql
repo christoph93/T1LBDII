@@ -29,7 +29,7 @@ CREATE TABLE personagem
   mapa_id number(10),
   arma_id number(10),
   nivel number(10) NOT NULL,
-  defesa number(10) generated always as ( nivel * 0.3 ) virtual,
+  defesa number(10) default 1,
 
   CONSTRAINT personagem_pk PRIMARY KEY (personagem_id),
   CONSTRAINT check_classe CHECK (classe in ('ARQUEIRO','FEITICEIRO','TEMPLARIO','TRAPACEIRO')),
@@ -284,32 +284,22 @@ create or replace TRIGGER calcula_defesa
 AFTER INSERT OR UPDATE OR DELETE
    ON personagem_item
    FOR EACH ROW
-   
+
 BEGIN
 
-  if DELETING then
+  if INSERTING OR UPDATING THEN
 
     update personagem p
-       set p.defesa = (select sum(i.defesa) 
-                         from item i 
-                  inner join personagem_item p on i.item_id = p.item_id
-                       where p.personagem_id = :old.personagem_id
-                         and i.defesa is not null) + (p.nivel * 0.3)
-     where p.personagem_id = :old.personagem_id;    
+       set p.defesa = (select i.defesa from item i where i.item_id = :new.item_id) + p.defesa;
 
-  end if;
+  END IF; 
 
-  if INSERTING OR UPDATING then
+  if DELETING THEN
 
     update personagem p
-       set p.defesa = (select sum(i.defesa) 
-                         from item i 
-                  inner join personagem_item p on i.item_id = p.item_id
-                       where p.personagem_id = :new.personagem_id
-                         and i.defesa is not null) + (p.nivel * 0.3)
-     where p.personagem_id = :new.personagem_id;    
+       set p.defesa = p.defesa - (select i.defesa from item i where i.item_id = :old.item_id) ;
 
-  end if;
-   
+  end if;            
+
 END;
 /
