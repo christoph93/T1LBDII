@@ -23,8 +23,8 @@ CREATE TABLE personagem
   personagem_id number(10) NOT NULL,
   classe varchar2(20) NOT NULL,
   raca varchar2(20) NOT NULL,
-  hp number(10) NOT NULL,
-  sp number(10) NOT NULL,
+  hp number(10),
+  sp number(10),
   user_id number(10),
   mapa_id number(10),
   arma_id number(10),
@@ -73,7 +73,6 @@ CREATE TABLE item
   tipo varchar2(20) NOT NULL,
   valor_base number(10) NOT NULL,
   nome varchar2(50) NOT NULL,
-  ataque number(10),
   defesa number(10),
   equipa_em varchar2(20),
   
