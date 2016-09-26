@@ -290,7 +290,7 @@ BEGIN
   if INSERTING OR UPDATING THEN
 
     update personagem p
-       set p.defesa = (select i.defesa from item i where i.item_id = :new.item_id) + p.defesa
+       set p.defesa = (select nvl(i.defesa, 0) from item i where i.item_id = :new.item_id) + p.defesa
        where p.personagem_id = :new.personagem_id;
 
   END IF; 
@@ -298,7 +298,7 @@ BEGIN
   if DELETING THEN
 
     update personagem p
-       set p.defesa = p.defesa - (select i.defesa from item i where i.item_id = :old.item_id)
+       set p.defesa = p.defesa - (select nvl(i.defesa, 0) from item i where i.item_id = :old.item_id)
        where p.personagem_id = :old.personagem_id;
   end if;            
 
