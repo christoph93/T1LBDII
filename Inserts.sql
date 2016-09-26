@@ -27,6 +27,8 @@ values (1, 'Primeiros-socorros', 'NEUTRO', 5, 'Lança um intensa rajada de flech
 insert into item (item_id, tipo, valor_base, nome) values (5, 'CONSUMIVEL', 4, 'Poção de cura menor');
 insert into item (item_id, tipo, valor_base, nome, defesa, equipa_em) values (20, 'ESCUDO', 0, 'Escudo de Madeira', 20, 'MAO');
 insert into item (item_id, tipo, valor_base, nome, defesa, equipa_em) values (98, 'CAPA', 0, 'Capa de Seda', 3, 'CORPO');
+insert into item (item_id, tipo, valor_base, nome) values (12, 'CONSUMIVEL', 14, 'Poção da fúria');
+
 
 insert into npc (npc_id, tipo, nome, hp, sp, nivel) values (40, 'NEUTRO', 'Isaias', 40, 0, 14);
 insert into npc (npc_id, tipo, nome, hp, sp, nivel) values (43, 'INIMIGO', 'Zumbi', 120, 5, 4);
@@ -49,6 +51,7 @@ insert into npc_mapa (npc_id, mapa_id) values (43, 76);
 insert into npc_mapa (npc_id, mapa_id) values (23, 2);
 
 
+insert into personagem_item (item_id, personagem_id, quantidade) values (12, 5, 15);
 insert into personagem_item (item_id, personagem_id, quantidade) values (5, 5, 10);
 insert into personagem_item (item_id, personagem_id, quantidade) values (98, 5, 1);
 insert into personagem_item (item_id, personagem_id, quantidade) values (5, 7, 8);
