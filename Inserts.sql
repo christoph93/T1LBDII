@@ -57,3 +57,15 @@ insert into personagem_item (item_id, personagem_id, quantidade) values (98, 5, 
 insert into personagem_item (item_id, personagem_id, quantidade) values (5, 7, 8);
 insert into personagem_item (item_id, personagem_id, quantidade) values (5, 8, 15);
 insert into personagem_item (item_id, personagem_id, quantidade) values (20, 7, 1);
+
+
+select  u.user_id
+      , u.user_name
+      , p.classe
+      , p.raca
+      , i.nome
+      , pi.quantidade
+ from usuario u inner join personagem p on u.user_id = p.user_id
+inner join personagem_item pi on pi.personagem_id = p.personagem_id
+inner join item i on pi.item_id = i.item_id
+where pi.quantidade > (select round(avg(quantidade)) from personagem_item);
