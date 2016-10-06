@@ -59,6 +59,46 @@ insert into personagem_item (item_id, personagem_id, quantidade) values (5, 8, 1
 insert into personagem_item (item_id, personagem_id, quantidade) values (20, 7, 1);
 
 
+update personagem set arma_id = 1 where personagem_id = 7;
+
+/*
+Consulta 1:
+ Junção de pelo menos 4 tabelas
+ Seleções PARA CADA UMA das tabelas;
+ Orientações específicas:
+- Filtrar registros em TODAS as tabelas;
+- Seleções sobre colunas que não pertençam às chaves primárias das tabelas;
+- Seleções por DESIGUALDADE (outros operadores do que a igualdade (=))
+em pelo menos 2 tabelas. 
+*/
+
+
+SELECT u.user_name, u.idade, p.nivel, a.nome, a.dano_base, i.nome, pi.quantidade, i.valor_base FROM
+usuario u inner join personagem p on u.user_id = p.user_id
+inner join arma a on p.arma_id = a.arma_id
+inner join personagem_item pi on pi.personagem_id = p.personagem_id
+inner join item i on i.item_id = pi.item_id
+where p.nivel < 15
+and pi.quantidade >= 1
+and upper(i.nome) like 'POÇÃO%'
+and a.dano_base <> 0
+and u.idade between 18 and 35;
+
+
+/*
+Consulta 2:
+Consulta com sub-consulta;
+Sub-consulta retorna pelo menos 1 valor por função de agregação;
+Orientações específicas:
+- ao menos 3 tabelas;
+- Função de agregação na sub-consulta.
+Exemplo:
+select * from pedidos_produtos natural join pedidos
+natural join produtos natural join fornecedores
+where valor_unitário > (select avg(preço) from produtos);
+*/
+
+
 select  u.user_id
       , u.user_name
       , p.classe
