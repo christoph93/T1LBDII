@@ -333,14 +333,13 @@ insert into usuario (user_id, user_name, nome, sobrenome, email, data_nasc)
 values (3, 'victoras', 'Victor', 'Araújo Silva', 'victor.silva@terra.com.br', to_date('06/04/1985', 'MM/DD/YYYY'));
 
 
-insert into personagem (personagem_id, classe, raca, user_id, nivel) values (5, 'ARQUEIRO', 'ELFO', 3, 1);
-insert into personagem (personagem_id, classe, raca, user_id, nivel) values (8, 'TRAPACEIRO', 'GOBLIN', 2, 1);
-insert into personagem (personagem_id, classe, raca, user_id, nivel) values (7, 'TEMPLARIO', 'HUMANO', 1, 1);
-
 insert into arma (arma_id, nome, tipo, dano_base) values (1, 'Espada Larga', 'ESPADA', 10);
 insert into arma (arma_id, nome, tipo, dano_base) values (2, 'Arco Longo', 'ARCO', 8);
 insert into arma (arma_id, nome, tipo, dano_base) values (3, 'Cajado Branco', 'CAJADO', 3);
 
+insert into personagem (personagem_id, classe, raca, user_id, nivel) values (5, 'ARQUEIRO', 'ELFO', 3, 1);
+insert into personagem (personagem_id, classe, raca, user_id, nivel) values (8, 'TRAPACEIRO', 'GOBLIN', 2, 1);
+insert into personagem (personagem_id, classe, raca, user_id, nivel, arma_id) values (7, 'TEMPLARIO', 'HUMANO', 1, 1, 1);
 
 insert into habilidade (habilidade_id, nome, propriedade, valor_base, descricao, custo) 
 values (9, 'Rajada de Flechas', 'NEUTRO', 5, 'Lança um intensa rajada de flechas contra o alvo.', 12);
@@ -386,7 +385,7 @@ insert into personagem_item (item_id, personagem_id, quantidade) values (5, 8, 1
 insert into personagem_item (item_id, personagem_id, quantidade) values (20, 7, 1);
 
 
-update personagem set arma_id = 1 where personagem_id = 7;
+commit;
 
 
 
