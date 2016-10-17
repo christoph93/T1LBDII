@@ -336,9 +336,10 @@ values (3, 'victoras', 'Victor', 'Araújo Silva', 'victor.silva@terra.com.br', t
 insert into arma (arma_id, nome, tipo, dano_base) values (1, 'Espada Larga', 'ESPADA', 10);
 insert into arma (arma_id, nome, tipo, dano_base) values (2, 'Arco Longo', 'ARCO', 8);
 insert into arma (arma_id, nome, tipo, dano_base) values (3, 'Cajado Branco', 'CAJADO', 3);
+insert into arma (arma_id, nome, tipo, dano_base) values (4, 'Faca de Aço', 'ADAGA', 5);
 
 insert into personagem (personagem_id, classe, raca, user_id, nivel) values (5, 'ARQUEIRO', 'ELFO', 3, 1);
-insert into personagem (personagem_id, classe, raca, user_id, nivel) values (8, 'TRAPACEIRO', 'GOBLIN', 2, 1);
+insert into personagem (personagem_id, classe, raca, user_id, nivel, arma_id) values (8, 'TRAPACEIRO', 'GOBLIN', 2, 1, 4);
 insert into personagem (personagem_id, classe, raca, user_id, nivel, arma_id) values (7, 'TEMPLARIO', 'HUMANO', 1, 1, 1);
 
 insert into habilidade (habilidade_id, nome, propriedade, valor_base, descricao, custo) 
